@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Dòng tiền máy</title>
+  <meta name="theme-color" content="#f9f9f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232a78d6'/%3E%3Cpath d='M9 22V10h6a4 4 0 0 1 0 8h-6M17 22h6' stroke='white' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/base-tokens-and-layout.css">
+  <link rel="stylesheet" href="assets/css/overview-cards-and-lists.css">
+  <link rel="stylesheet" href="assets/css/action-forms.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+  <script type="module" src="assets/js/app-main.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1 class="topbar__title">Dòng tiền máy</h1>
+      <span class="topbar__date" id="today-label"></span>
+    </div>
+    <button class="icon-btn" id="refresh" type="button" aria-label="Tải lại số liệu">↻</button>
+  </header>
+
+  <main class="wrap">
+    <section class="gate" id="gate" hidden></section>
+    <div id="view-overview" hidden></div>
+    <div id="view-input" hidden></div>
+    <div id="view-lists" hidden></div>
+  </main>
+
+  <nav class="tabbar" id="tabbar" role="tablist" hidden>
+    <button type="button" data-tab="overview" role="tab" aria-selected="true"><span aria-hidden="true">📊</span>Tổng quan</button>
+    <button type="button" data-tab="input" role="tab" aria-selected="false"><span aria-hidden="true">✍️</span>Nhập</button>
+    <button type="button" data-tab="lists" role="tab" aria-selected="false"><span aria-hidden="true">📱</span>Máy &amp; đơn</button>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

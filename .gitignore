@@ -1,0 +1,6 @@
+_private/
+node_modules/
+.DS_Store
+Thumbs.db
+# Plan mentions the owner's real capital: keep it out of the public repo
+plans/
