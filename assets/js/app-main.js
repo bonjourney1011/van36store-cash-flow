@@ -42,8 +42,15 @@ function selectTab(name) {
 
 function openAction(action, prefill) {
   selectTab('input');
-  openActionForm(formHost, action, specFor(action), payload, prefill, {
-    onSubmit: submitAction,
+  const spec = specFor(action);
+  openActionForm(formHost, action, spec, payload, prefill, {
+    onSubmit: async (serverAction, data, requestId) => {
+      const result = await submitAction(serverAction, data, requestId);
+      if (result.ok && spec.repeatWith) {
+        openAction(action, Object.fromEntries(spec.repeatWith.filter((key) => data[key] != null).map((key) => [key, data[key]])));
+      }
+      return result;
+    },
     onClose: () => formHost.replaceChildren()
   });
 }

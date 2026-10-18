@@ -13,12 +13,28 @@ function tile(action, openAction, primary) {
   }, el('span', { 'aria-hidden': 'true', text: spec.icon }), spec.title);
 }
 
+const COUNTING_DAYS = 14;
+const dayNumber = (iso) => Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10)) / 86400000;
+
+/**
+ * Stock-count window: the opening row is still among the latest entries and at most 14 days old.
+ * Afterwards the tile hides; "Mua máy" → "Thêm chi tiết" → "Máy có sẵn" stays as the fallback.
+ */
+function isCountingStock(payload) {
+  const opening = payload.recentLedger.find((row) => row.loai === 'Đầu kỳ');
+  return Boolean(opening) && dayNumber(payload.dashboard.today) - dayNumber(opening.ngay) <= COUNTING_DAYS;
+}
+
+const fullWidth = (action, openAction) =>
+  el('div', { class: 'actions-main', style: 'grid-template-columns:1fr' }, tile(action, openAction, true));
+
 /** Returns the element forms are rendered into. */
 export function renderInputTab(container, payload, openAction) {
   const formHost = el('div');
   const needsOpening = !payload.dashboard.hasOpening;
   const blocks = [
-    needsOpening ? el('div', { class: 'actions-main', style: 'grid-template-columns:1fr' }, tile('dau_ky', openAction, true)) : null,
+    needsOpening ? fullWidth('dau_ky', openAction) : null,
+    !needsOpening && isCountingStock(payload) ? fullWidth('mua_co_san', openAction) : null,
     el('div', { class: 'actions-main' }, MAIN_ACTIONS.map((action) => tile(action, openAction, false))),
     el('div', { class: 'actions-more' }, MORE_ACTIONS.map((action) => tile(action, openAction, false))),
     el('p', { class: 'card__hint', text: 'Chỉ nhập khi tiền hoặc máy đổi chỗ. Ngày tự là hôm nay; nhập bù thì mở "Thêm chi tiết".' }),

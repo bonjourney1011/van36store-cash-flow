@@ -17,13 +17,21 @@ export const ACTION_SPECS = {
       { name: 'no_vay', label: 'Nợ vay đang có (nếu có)', type: 'money', more: true },
       dateField
     ],
-    hint: () => 'Chỉ làm 1 lần. Sau đó thêm từng máy đang có bằng "Mua máy" → mở "Thêm chi tiết" → tick "Máy có sẵn".'
+    hint: () => 'Chỉ làm 1 lần. Sau đó bấm "Thêm máy đang có" cho từng máy trong kho.'
+  },
+  // Stock counted at the opening: same server action as a purchase, but no cash leaves (co_san).
+  mua_co_san: {
+    title: 'Thêm máy đang có', icon: '📦', submit: 'Lưu máy đang có', action: 'mua', fixed: { co_san: true },
+    // Counting stock means many machines in a row: reopen with the same group and day.
+    repeatWith: ['nhom', 'ngay'],
+    fields: [...newMachineFields('gia_mua', 'Giá vốn (giá mua + tiền đã sửa)'),
+      { name: 'ngay', label: 'Ngày mua (ước chừng cũng được)', type: 'date', required: true }, noteField],
+    hint: () => 'Máy đã trả tiền từ trước nên không trừ tiền. Ngày mua đúng thì số ngày tồn và chi phí giữ máy mới đúng.'
   },
   mua: {
     title: 'Mua máy', icon: '📥', submit: 'Lưu máy mua',
     fields: [...newMachineFields('gia_mua', 'Giá mua'),
-      { name: 'co_san', label: 'Máy có sẵn từ trước (kiểm kê đầu kỳ, không trừ tiền)', type: 'toggle', more: true },
-      dateField, noteField],
+      { name: 'co_san', label: 'Máy có sẵn từ trước (kiểm kê đầu kỳ, không trừ tiền)', type: 'toggle', more: true },      dateField, noteField],
     hint: (p, v) => {
       const max = p.dashboard.kpis.maxBuyToday;
       if (v.gia_mua > max && !v.co_san) return `⚠️ Vượt mức nên mua hôm nay (${formatShort(max)}): sau khi mua, tiền sẽ dưới mức đệm hoặc 1 máy chiếm quá nhiều vốn.`;

@@ -78,7 +78,11 @@ Mỗi ngày trang cho biết: hôm nay mua được máy tối đa bao nhiêu ti
 1. Đếm tiền mặt và xem số dư tài khoản, rồi vào tab **Nhập → Kiểm kê đầu kỳ**.
    - Đang có khoản vay: ghi vào "Nợ vay đang có" trong "Thêm chi tiết".
    - Mọi thao tác khác bị khoá cho đến khi có đầu kỳ, để không bị trừ tiền 2 lần.
-2. Với từng máy đang có: chọn **Mua máy**, mở **Thêm chi tiết**, tick **"Máy có sẵn"**. Giá mua ghi theo giá vốn thật, đã gồm tiền sửa.
+2. Với từng máy đang có: bấm nút xanh **📦 Thêm máy đang có**.
+   - Nút này hiện trong 14 ngày đầu sau khi kiểm kê.
+   - Giá vốn = giá mua + tiền đã sửa. Ngày mua ước chừng cũng được.
+   - Máy này không bị trừ tiền. Lưu xong, form tự mở lại cho máy tiếp theo.
+   - Phát hiện máy cũ sau 14 ngày: dùng **Mua máy**, mở "Thêm chi tiết", tick "Máy có sẵn".
 3. Máy đang đi COD hoặc đang ở chỗ mối: thêm như bước 2, sau đó chọn **Bán / gửi máy** với ngày gửi cũ (trong "Thêm chi tiết").
    - Không ghi tiền cọc hay số mối đã trả **trước ngày kiểm kê**, vì số tiền đó đã nằm trong tiền đầu kỳ.
    - Thay vào đó, ghi giá bán bằng **số tiền còn phải thu**.

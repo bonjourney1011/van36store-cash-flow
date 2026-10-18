@@ -118,7 +118,8 @@ export function openActionForm(container, action, spec, payload, prefill, { onSu
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const data = {};
+    // A spec may reuse another server action with some values fixed (e.g. stock counted at the opening).
+    const data = { ...spec.fixed };
     for (const f of fields.filter((item) => item.visible)) {
       const value = values[f.spec.name];
       const empty = value == null || value === '' || (Array.isArray(value) && !value.length);
@@ -127,7 +128,7 @@ export function openActionForm(container, action, spec, payload, prefill, { onSu
     }
     submit.disabled = true;
     submit.textContent = 'Đang lưu…';
-    const result = await onSubmit(action, data, requestId);
+    const result = await onSubmit(spec.action || action, data, requestId);
     submit.disabled = false;
     submit.textContent = spec.submit;
     if (!result.ok) error.textContent = result.error;
